@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>eis-large.png</file>
+    </qresource>
+</RCC>
