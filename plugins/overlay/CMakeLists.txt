@@ -4,6 +4,8 @@ project(OVERLAY)
 
 find_package("Qt4" REQUIRED)
 include(${QT_USE_FILE})
+include_directories( ${OVERLAY_BINARY_DIR} ${QT_INCLUDE_DIR} )
+
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 # enable warnings
 add_definitions( -Wall )
