@@ -16,7 +16,7 @@
  */
 
 #include "easyimagesizer3/pluginsdialog.h"
-#include "../ui_pluginsdialog.h"
+#include "ui_pluginsdialog.h"
 #include <QCheckBox>
 #include "easyimagesizer3/pluginloader.h"
 #include "easyimagesizer3/easyimagesizer3.h"
