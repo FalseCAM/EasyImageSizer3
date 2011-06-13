@@ -63,7 +63,6 @@ public:
 	static void about(QWidget* parent);
 
 private:
-	void checkForExifTool();
 
 signals:
 	void progress(int);

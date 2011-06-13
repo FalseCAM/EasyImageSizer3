@@ -37,6 +37,11 @@ EisImage::~EisImage() {
 }
 
 void EisImage::readMetadata() {
+	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(
+			this->file.toStdString().c_str());
+	image->readMetadata();
+
+	this->exifData = image->exifData();
 }
 
 void EisImage::setImage(QImage img) {
@@ -91,11 +96,21 @@ QString EisImage::save(QString format, int quality) {
 // Copy exif Data from one file to another
 void EisImage::copyExifData(QString srcFile, QString destFile) {
 	// Start new Process that copies exif data
-	QProcess process;
-	process.start(
-			QString("exiftool -all= -overwrite_original -tagsfromfile \"").append(
-					srcFile) .append("\" -exif:all \"").append(destFile).append(
-					"\"").replace("/", QDir::separator()));
+	//QProcess process;
+	//process.start(
+	//		QString("exiftool -all= -overwrite_original -tagsfromfile \"").append(
+	//				srcFile) .append("\" -exif:all \"").append(destFile).append(
+	//				"\"").replace("/", QDir::separator()));
 	// Wait until process finished
-	process.waitForFinished();
+	//process.waitForFinished();
+	Exiv2::Image::AutoPtr srcImage = Exiv2::ImageFactory::open(
+			srcFile.toStdString().c_str());
+	srcImage->readMetadata();
+
+	Exiv2::ExifData& exifData = srcImage->exifData();
+	Exiv2::Image::AutoPtr destImage = Exiv2::ImageFactory::open(
+			destFile.toStdString().c_str());
+	destImage->setExifData(exifData);
+	destImage->writeMetadata();
+
 }

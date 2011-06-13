@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'exif.ui'
 **
-** Created: Sun 12. Jun 11:51:26 2011
+** Created: Mon 13. Jun 10:33:30 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

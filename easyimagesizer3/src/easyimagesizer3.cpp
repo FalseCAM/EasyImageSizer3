@@ -25,7 +25,6 @@
 #include "easyimagesizer3/pluginloader.h"
 
 EasyImageSizer3::EasyImageSizer3() {
-	checkForExifTool();
 }
 
 EasyImageSizer3::~EasyImageSizer3() {
@@ -84,20 +83,4 @@ QStringList EasyImageSizer3::convert(QStringList images, QString folder,
 			img->save(folder, format, quality);
 	}
 	return images;
-}
-
-// check for exif tool
-void EasyImageSizer3::checkForExifTool() {
-	QProcess exiftool;
-	exiftool.start("exiftool -help");
-	if (exiftool.waitForFinished(-1)) {
-
-	} else {
-		QMessageBox::warning(
-				0,
-				"exiftool warning",
-				QString(
-						"Exiftool command is not installed or in workingdirectory.<br />"
-							"Exif data of images wont be copied."));
-	}
 }

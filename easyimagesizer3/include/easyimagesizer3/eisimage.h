@@ -22,6 +22,7 @@
 #include "easyimagesizer3/easyimagesizer3_global.h"
 #include <QString>
 #include <QImage>
+#include <exiv2/exiv2.hpp>
 
 class EASYIMAGESIZER3SHARED_EXPORT EisImage: public QObject {
 Q_OBJECT
@@ -45,6 +46,7 @@ private:
 	QString file;
 	QString name;
 	QImage image;
+	Exiv2::ExifData exifData;
 	int index;
 
 	void readMetadata();
