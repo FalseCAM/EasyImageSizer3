@@ -16,5 +16,5 @@
 	include_directories("${PROJECT_SOURCE_DIR}/easyimagesizer3/include")
 
 	ADD_SUBDIRECTORY( easyimagesizer3 )
-	ADD_SUBDIRECTORY( easyimagesizer3-gui )
+	ADD_SUBDIRECTORY( easyimagesizer3_gui )
 	ADD_SUBDIRECTORY( plugins )

@@ -23,8 +23,6 @@ set( EASYIMAGESIZER3_LIB_RCS
        easyimagesizer3.qrc
   )
 
-
-
 QT4_WRAP_UI(EASYIMAGESIZER3_LIB_UIS_H ${EASYIMAGESIZER3_LIB_UIS})
 QT4_ADD_RESOURCES( EASYIMAGESIZER3_LIB_RC_SRCS ${EASYIMAGESIZER3_LIB_RCS} )
 QT4_WRAP_CPP(EASYIMAGESIZER3_LIB_MOC_SRCS ${EASYIMAGESIZER3_LIB_HEADERS})
@@ -35,5 +33,5 @@ add_library(easyimagesizer3 SHARED ${EASYIMAGESIZER3_LIB_SRCS}
 									${EASYIMAGESIZER3_LIB_UIS_H})
 target_link_libraries(easyimagesizer3 exiv2 ${QT_LIBRARIES})
 install(TARGETS easyimagesizer3 DESTINATION lib)
-#install(DIRECTORY "include/easyimagesizer3" DESTINATION "include"
- #       FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY "include/easyimagesizer3" DESTINATION "include"
+      FILES_MATCHING PATTERN "*.h")
