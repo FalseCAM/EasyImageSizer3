@@ -56,7 +56,7 @@ public:
 	void convert(EisImage *image);
 
 private slots:
-	QImage addOverlay(QImage image, QString overlay);
+	void addOverlay(QImage *image, QString overlay);
 	void loadState();
 	void saveState();
 	void setFont();

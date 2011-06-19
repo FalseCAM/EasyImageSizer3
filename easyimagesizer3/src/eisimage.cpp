@@ -27,13 +27,14 @@ EisImage::EisImage() {
 EisImage::EisImage(QString file, int index = 0) {
 	this->file = file;
 	this->name = QFileInfo(file).baseName();
-	this->image = QImage(file);
+	this->image = new QImage(file);
 	this->index = index;
 	readMetadata();
 }
 
 EisImage::~EisImage() {
-
+	if (this->image != 0)
+		delete this->image;
 }
 
 void EisImage::readMetadata() {
@@ -44,11 +45,13 @@ void EisImage::readMetadata() {
 	this->exifData = image->exifData();
 }
 
-void EisImage::setImage(QImage img) {
+void EisImage::setImage(QImage *img) {
+	if (this->image != 0)
+		delete this->image;
 	this->image = img;
 }
 
-QImage EisImage::getImage() {
+QImage* EisImage::getImage() {
 	return this->image;
 }
 
@@ -75,7 +78,7 @@ QString EisImage::save(QString folder, QString format, int quality) {
 	QString filename = folder + "/" + name + "." + format;
 	qDebug("[EisImage] Filename is %s, Format is %s", qPrintable(filename),
 			qPrintable(format));
-	if (!this->image.save(filename, qPrintable(format), quality)) {
+	if (!this->image->save(filename, qPrintable(format), quality)) {
 		qDebug("[EisImage] %s could not been saved.", qPrintable(filename));
 	} else {
 		copyExifData(this->file, filename);

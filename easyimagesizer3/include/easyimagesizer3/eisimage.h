@@ -33,8 +33,8 @@ public:
 	EisImage(QString file, int index);
 	~EisImage();
 
-	void setImage(QImage img);
-	QImage getImage();
+	void setImage(QImage* img);
+	QImage *getImage();
 	void setName(QString name);
 	QString getName();
 	int getIndex();
@@ -45,7 +45,7 @@ public:
 private:
 	QString file;
 	QString name;
-	QImage image;
+	QImage *image;
 	Exiv2::ExifData exifData;
 	int index;
 

@@ -81,6 +81,7 @@ QStringList EasyImageSizer3::convert(QStringList images, QString folder,
 			img->save(format, quality);
 		else
 			img->save(folder, format, quality);
+		delete img;
 	}
 	return images;
 }
