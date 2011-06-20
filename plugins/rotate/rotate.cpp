@@ -46,7 +46,7 @@ QString Rotate::getTitle() {
 }
 
 QString Rotate::getVersion() {
-	return QString("0.3");
+	return QString("0.4");
 }
 
 QString Rotate::getAuthor() {

@@ -67,7 +67,7 @@ QString OverlayText::getTitle() {
 }
 
 QString OverlayText::getVersion() {
-	return QString("0.2");
+	return QString("0.3");
 }
 
 QString OverlayText::getAuthor() {

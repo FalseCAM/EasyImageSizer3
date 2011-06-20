@@ -45,7 +45,7 @@ QString Exif::getTitle() {
 }
 
 QString Exif::getVersion() {
-	return QString("0.3");
+	return QString("0.4");
 }
 
 QString Exif::getAuthor() {

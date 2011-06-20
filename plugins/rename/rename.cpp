@@ -47,7 +47,7 @@ QString Rename::getTitle(){
 }
 
 QString Rename::getVersion(){
-    return QString("0.2");
+    return QString("0.3");
 }
 
 QString Rename::getAuthor(){

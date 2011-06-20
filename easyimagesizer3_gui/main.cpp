@@ -21,8 +21,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QCoreApplication::setApplicationName("EasyImageSizer");
-    QCoreApplication::setApplicationVersion("3.0.1");
+    QCoreApplication::setApplicationName("EasyImageSizer3");
+    QCoreApplication::setApplicationVersion("3.0.2");
     QCoreApplication::setOrganizationName("FalseCAM");
     QCoreApplication::setOrganizationDomain("www.falsecam.net");
     MainWindow w;

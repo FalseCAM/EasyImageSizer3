@@ -1,3 +1,3 @@
 
 - move to cmake
-- use exiv2 lib instead of exiftools
+- make "cmake, make, make install" working

@@ -189,12 +189,12 @@
   </action>
   <action name="actionAbout_EasyImageSizer_GUI">
    <property name="text">
-    <string>About EasyImageSizer-GUI</string>
+    <string>About EasyImageSizer3-GUI</string>
    </property>
   </action>
   <action name="actionAbout_EasyImageSizer">
    <property name="text">
-    <string>About EasyImageSizer</string>
+    <string>About EasyImageSizer3</string>
    </property>
   </action>
   <action name="actionAbout_QT">

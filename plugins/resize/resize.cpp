@@ -55,7 +55,7 @@ QString Resize::getTitle() {
 }
 
 QString Resize::getVersion() {
-	return QString("0.3");
+	return QString("0.4");
 }
 
 QString Resize::getAuthor() {

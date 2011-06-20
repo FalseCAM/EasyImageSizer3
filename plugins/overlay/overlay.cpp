@@ -52,7 +52,7 @@ QString Overlay::getTitle() {
 }
 
 QString Overlay::getVersion() {
-	return QString("0.2");
+	return QString("0.3");
 }
 
 QString Overlay::getAuthor() {
