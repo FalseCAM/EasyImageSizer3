@@ -29,6 +29,18 @@
 			DESTINATION lib)
 	install(FILES "bin/easyimagesizer3-gui"
 			DESTINATION "share/easyimagesizer3")
+	install(FILES "bin/plugins/libexif.so"
+			DESTINATION "share/easyimagesizer3/plugins")
+	install(FILES "bin/plugins/liboverlay.so"
+			DESTINATION "share/easyimagesizer3/plugins")
+	install(FILES "bin/plugins/liboverlay-text.so"
+			DESTINATION "share/easyimagesizer3/plugins")
+	install(FILES "bin/plugins/librename.so"
+			DESTINATION "share/easyimagesizer3/plugins")
+	install(FILES "bin/plugins/libresize.so"
+			DESTINATION "share/easyimagesizer3/plugins")
+	install(FILES "bin/plugins/librotate.so"
+			DESTINATION "share/easyimagesizer3/plugins")
 	install(DIRECTORY "easyimagesizer3/include/easyimagesizer3"
 			DESTINATION "include"
 			FILES_MATCHING PATTERN "*.h")
@@ -36,6 +48,3 @@
 			DESTINATION "share/pixmaps")
 	install (FILES "data/easyimagesizer3.sh"
 			DESTINATION bin)
-	install (DIRECTORY "bin/plugins"
-			DESTINATION "share/easyimagesizer3/plugins/"
-			FILES_MATCHING PATTERN "*.so")
