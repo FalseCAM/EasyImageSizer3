@@ -56,6 +56,7 @@ public slots:
 	void deactivatePlugin(QString name);
 	static void destroy();
 	void loadPlugins();
+	void loadPlugins(QString dir);
 	void unloadPlugins();
 	void loadConfig();
 	void saveConfig();

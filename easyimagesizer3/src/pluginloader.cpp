@@ -171,6 +171,7 @@ QList<EasyImageSizer3Plugin *> PluginLoader::getActivatedPlugins() {
 void PluginLoader::loadPlugins() {
 	// Loads Plugins in plugins dir
 	QDir pluginsDir(QCoreApplication::applicationDirPath());
+	loadPlugins(pluginsDir.currentPath());
 #if defined(Q_OS_WIN)
 	if (pluginsDir.dirName().toLower() == "debug"
 			|| pluginsDir.dirName().toLower() == "release") {
@@ -183,9 +184,17 @@ void PluginLoader::loadPlugins() {
 		pluginsDir.cdUp();
 		pluginsDir.cdUp();
 	}
+#elif defined(Q_OS_LINUX)
+	pluginsDir.cdUp();
+	pluginsDir.cd("share");
 #endif
+	loadPlugins(pluginsDir.currentPath());
+}
 
-	pluginsDir.cd("plugins");
+void PluginLoader::loadPlugins(QString dir) {
+	if (QDir::exists(dir)) {
+		pluginsDir.cd("plugins");
+	}
 
 	foreach (QString fileName, pluginsDir.entryList(QDir::Files))
 		{

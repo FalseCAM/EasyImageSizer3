@@ -24,11 +24,12 @@
 	ADD_SUBDIRECTORY( easyimagesizer3 )
 	ADD_SUBDIRECTORY( easyimagesizer3_gui )
 	ADD_SUBDIRECTORY( plugins )
-	
+
 	install(FILES "bin/libeasyimagesizer3.so"
 			DESTINATION lib)
 	install(FILES "bin/easyimagesizer3-gui"
-			DESTINATION "share/easyimagesizer3")
+			DESTINATION bin
+			PERMISSIONS OWNER_READ OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 	install(FILES "bin/plugins/libexif.so"
 			DESTINATION "share/easyimagesizer3/plugins")
 	install(FILES "bin/plugins/liboverlay.so"
@@ -46,5 +47,3 @@
 			FILES_MATCHING PATTERN "*.h")
 	install (FILES "data/easyimagesizer3.xpm"
 			DESTINATION "share/pixmaps")
-	install (FILES "data/easyimagesizer3.sh"
-			DESTINATION bin)
