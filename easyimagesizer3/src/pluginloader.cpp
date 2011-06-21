@@ -52,6 +52,11 @@ void PluginLoader::destroy() {
 
 void PluginLoader::addPlugin(EasyImageSizer3Plugin *plugin) {
 	if (plugin) {
+		foreach(EasyImageSizer3Plugin * plugin_, pluginList)
+			{
+				if (plugin_->getName() == plugin->getName())
+					return;
+			}
 		pluginList.append(plugin);
 	}
 }
@@ -192,7 +197,8 @@ void PluginLoader::loadPlugins() {
 }
 
 void PluginLoader::loadPlugins(QString dir) {
-	if (QDir::exists(dir)) {
+	QDir pluginsDir(dir);
+	if (pluginsDir.exists(dir)) {
 		pluginsDir.cd("plugins");
 	}
 
