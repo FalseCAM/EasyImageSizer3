@@ -32,6 +32,3 @@ add_library(easyimagesizer3 SHARED ${EASYIMAGESIZER3_LIB_SRCS}
 									${EASYIMAGESIZER3_LIB_RC_SRCS}
 									${EASYIMAGESIZER3_LIB_UIS_H})
 target_link_libraries(easyimagesizer3 exiv2 ${QT_LIBRARIES})
-install(TARGETS easyimagesizer3 DESTINATION lib)
-install(DIRECTORY "include/easyimagesizer3" DESTINATION "include"
-      FILES_MATCHING PATTERN "*.h")

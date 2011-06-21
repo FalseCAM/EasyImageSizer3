@@ -1,12 +1,12 @@
 	CMAKE_MINIMUM_REQUIRED(VERSION 2.8.1)
 	
  	########### Project name ###########
- 	PROJECT(EasyImageSizer)
+ 	PROJECT(EasyImageSizer3)
  	SET(EASYIMAGESIZER_MAJOR "3")
  	SET(EASYIMAGESIZER_MINOR "0")
- 	SET(EASYIMAGESIZER_PATCH "1")
+ 	SET(EASYIMAGESIZER_PATCH "2")
  	SET(VERSION "${EASYIMAGESIZER_MAJOR}.${EASYIMAGESIZER_MINOR}.${EASYIMAGESIZER_PATCH}")
- 	SET(PACKAGE easyimagesizer)
+ 	SET(PACKAGE easyimagesizer3)
    
   ########### Subdirectories ###############
 
@@ -24,3 +24,18 @@
 	ADD_SUBDIRECTORY( easyimagesizer3 )
 	ADD_SUBDIRECTORY( easyimagesizer3_gui )
 	ADD_SUBDIRECTORY( plugins )
+	
+	install(FILES "bin/libeasyimagesizer3.so"
+			DESTINATION lib)
+	install(FILES "bin/easyimagesizer3-gui"
+			DESTINATION "share/easyimagesizer3")
+	install(DIRECTORY "easyimagesizer3/include/easyimagesizer3"
+			DESTINATION "include"
+			FILES_MATCHING PATTERN "*.h")
+	install (FILES "data/easyimagesizer3.xpm"
+			DESTINATION "share/pixmaps")
+	install (FILES "data/easyimagesizer3.sh"
+			DESTINATION bin)
+	install (DIRECTORY "bin/plugins"
+			DESTINATION "share/easyimagesizer3/plugins/"
+			FILES_MATCHING PATTERN "*.so")
