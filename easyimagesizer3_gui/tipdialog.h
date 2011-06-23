@@ -19,6 +19,7 @@
 #define TIPDIALOG_H
 
 #include <QDialog>
+#include <QStringList>
 
 namespace Ui {
     class TipDialog;
@@ -35,7 +36,7 @@ public:
     void startUp();
 
 private:
-    QStringList tips;
+    QStringList *tips;
     int tipNumber;
     Ui::TipDialog *ui;
     void nextTip();

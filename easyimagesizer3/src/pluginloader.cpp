@@ -177,6 +177,11 @@ void PluginLoader::loadPlugins() {
 	// Loads Plugins in plugins dir
 	QDir pluginsDir(QCoreApplication::applicationDirPath());
 	loadPlugins(pluginsDir.currentPath());
+	foreach (QString path, QCoreApplication::libraryPaths())
+		{
+			loadPlugins(path);
+			loadPlugins(path + QCoreApplication::applicationName().toLower());
+		}
 #if defined(Q_OS_WIN)
 	if (pluginsDir.dirName().toLower() == "debug"
 			|| pluginsDir.dirName().toLower() == "release") {
@@ -190,8 +195,6 @@ void PluginLoader::loadPlugins() {
 		pluginsDir.cdUp();
 	}
 #elif defined(Q_OS_LINUX)
-	pluginsDir.cdUp();
-	pluginsDir.cd("share");
 #endif
 	loadPlugins(pluginsDir.currentPath());
 }
@@ -199,7 +202,8 @@ void PluginLoader::loadPlugins() {
 void PluginLoader::loadPlugins(QString dir) {
 	QDir pluginsDir(dir);
 	if (pluginsDir.exists(dir)) {
-		pluginsDir.cd("plugins");
+		if (!pluginsDir.cd("plugins"))
+			return;
 	}
 
 	foreach (QString fileName, pluginsDir.entryList(QDir::Files))

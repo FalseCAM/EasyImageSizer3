@@ -10,6 +10,7 @@
    
   ########### Subdirectories ###############
 
+	set(CMAKE_SKIP_RPATH true)
 	set( LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin" )
 	set( EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin" )
 	set( CMAKE_LIBRARY_PATH "${CMAKE_SOURCE_DIR}/bin" )
@@ -31,19 +32,21 @@
 			DESTINATION bin
 			PERMISSIONS OWNER_READ OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 	install(FILES "bin/plugins/libexif.so"
-			DESTINATION "share/easyimagesizer3/plugins")
+			DESTINATION "lib/easyimagesizer3/plugins")
 	install(FILES "bin/plugins/liboverlay.so"
-			DESTINATION "share/easyimagesizer3/plugins")
+			DESTINATION "lib/easyimagesizer3/plugins")
 	install(FILES "bin/plugins/liboverlay-text.so"
-			DESTINATION "share/easyimagesizer3/plugins")
+			DESTINATION "lib/easyimagesizer3/plugins")
 	install(FILES "bin/plugins/librename.so"
-			DESTINATION "share/easyimagesizer3/plugins")
+			DESTINATION "lib/easyimagesizer3/plugins")
 	install(FILES "bin/plugins/libresize.so"
-			DESTINATION "share/easyimagesizer3/plugins")
+			DESTINATION "lib/easyimagesizer3/plugins")
 	install(FILES "bin/plugins/librotate.so"
-			DESTINATION "share/easyimagesizer3/plugins")
+			DESTINATION "lib/easyimagesizer3/plugins")
 	install(DIRECTORY "easyimagesizer3/include/easyimagesizer3"
 			DESTINATION "include"
 			FILES_MATCHING PATTERN "*.h")
 	install (FILES "data/easyimagesizer3.xpm"
 			DESTINATION "share/pixmaps")
+	install (FILES "data/easyimagesizer3.desktop"
+			DESTINATION "share/applications")
