@@ -195,6 +195,8 @@ void PluginLoader::loadPlugins() {
 		pluginsDir.cdUp();
 	}
 #elif defined(Q_OS_LINUX)
+	loadPlugins("/usr/lib/" + QCoreApplication::applicationName().toLower());
+	loadPlugins("/usr/lib64/" + QCoreApplication::applicationName().toLower());
 #endif
 	loadPlugins(pluginsDir.currentPath());
 }

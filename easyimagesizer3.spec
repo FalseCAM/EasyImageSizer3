@@ -14,7 +14,7 @@ Url:	        http://easyimagesizer.sourceforge.net/
 Source0:        %{name}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}
 BuildRequires:	gcc-c++
-BuildRequires:  libqt4-devel >= 4.5
+BuildRequires:  libqt4-devel >= 4.7
 BuildRequires:  desktop-file-utils
 BuildRequires:  cmake >= 2.8.1
 BuildRequires:  libexiv2-devel >= 0.21
@@ -22,34 +22,32 @@ BuildRequires:  libexiv2-devel >= 0.21
 BuildRequires:	update-desktop-files
 %endif
 
-#Requires:		libexiv2
-
 %if 0%{?fedora_version}
-Requires:		qt >= 4.5
+Requires:		qt >= 4.7
 %endif
 %if 0%{?mandriva_version}
 %ifarch x86_64
-Requires:		lib64qtcore4 >= 4.5
+Requires:		lib64qtcore4 >= 4.7
 %endif
 %ifarch i586
-Requires:		libqtcore4 >= 4.5
+Requires:		libqtcore4 >= 4.7
 %endif
 %endif
 
 %if 0%{?suse_version}
-Requires:       libqt4 >= 4.5
+Requires:       libqt4 >= 4.7
 %endif
 
 %if 0%{?sles_version}
-Requires:       libqt4 >= 4.5
+Requires:       libqt4 >= 4.7
 %endif
 
 %if 0%{?centos_version}
-Requires:       libqt4 >= 4.5
+Requires:       libqt4 >= 4.7
 %endif
 
 %if 0%{?rhel_version}
-Requires:       libqt4 >= 4.5
+Requires:       libqt4 >= 4.7
 %endif
 
 Obsoletes:      easyimagesizer3  
@@ -67,7 +65,6 @@ Authors:
 License:        LGPLv3+
 Summary:        Library to batch convert images
 Group:          Development/Libraries/C and C++
-Requires:       libexiv2-10
  
 %description -n lib%{name}
 %{name} is a library to batch convert image files.
