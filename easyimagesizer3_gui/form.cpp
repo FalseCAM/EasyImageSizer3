@@ -63,6 +63,10 @@ int Form::getImageQuality(){
         return -1;
 }
 
+bool Form::getCopyMetaData(){
+	return ui->copyMetadataCheckBox->isChecked();
+}
+
 // set Save Dir
 void Form::setSaveToDir()
 {

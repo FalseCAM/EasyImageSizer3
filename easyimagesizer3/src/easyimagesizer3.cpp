@@ -67,7 +67,7 @@ QList<EasyImageSizer3Plugin*> EasyImageSizer3::getPlugins() {
  Converts given images and returns a list of converted images.
  */
 QStringList EasyImageSizer3::convert(QStringList images, QString folder,
-		QString format, int quality) {
+		QString format, int quality, bool copyMetaData) {
 
 	for (int i = 0; i < images.size(); i++) {
 		qDebug("[EasyImageSizer] converts %s, format: %s",
@@ -77,6 +77,7 @@ QStringList EasyImageSizer3::convert(QStringList images, QString folder,
 		for (int i = 0; i < plugins.count(); i++) {
 			plugins.at(i)->convert(img);
 		}
+		img->setCopyMetaData(copyMetaData);
 		if (folder.isEmpty())
 			img->save(format, quality);
 		else

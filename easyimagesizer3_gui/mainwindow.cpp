@@ -32,7 +32,7 @@
 #include "tipdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-	QMainWindow(parent), ui(new Ui::MainWindow) {
+		QMainWindow(parent), ui(new Ui::MainWindow) {
 	/*
 	 Splash screen on starting.
 	 */
@@ -98,10 +98,10 @@ void MainWindow::loadPluginWidgets() {
 	ui->tabWidget->addTab(form, form->getTitle());
 
 	foreach (EasyImageSizer3Plugin *plugin, easyImageSizer->getPlugins())
-		{
-			if (plugin)
-				ui->tabWidget->addTab(plugin, plugin->getTitle());
-		}
+	{
+		if (plugin)
+			ui->tabWidget->addTab(plugin, plugin->getTitle());
+	}
 }
 
 /*
@@ -134,21 +134,21 @@ void MainWindow::addImage() {
 	// supported image formats
 	QString supportedFormats;
 	foreach(QByteArray format, QImageReader::supportedImageFormats())
-		{
-			supportedFormats.append(QString(" *.").append(format));
-		}
+	{
+		supportedFormats.append(QString(" *.").append(format));
+	}
 	// Create File Dialog and open selected Files
 	QStringList files = QFileDialog::getOpenFileNames(this,
 			tr("Please select a file"), this->lastOpenFileDir,
 			"All Supported Image Files (" + supportedFormats + ");;"
-				"Joint Photographic Experts Group File (*.jpg *.jpeg);;"
-				"All Files (*.*)");
+					"Joint Photographic Experts Group File (*.jpg *.jpeg);;"
+					"All Files (*.*)");
 	if (files.isEmpty())
 		return;
 	// checks for existing dir and saves last dialog opened dir
 	if (QDir(QFileInfo(files.at(0)).absoluteDir()).exists())
-		this->lastOpenFileDir
-				= QFileInfo(files.at(0)).absoluteDir().absolutePath();
+		this->lastOpenFileDir =
+				QFileInfo(files.at(0)).absoluteDir().absolutePath();
 
 	addImages(files);
 }
@@ -193,7 +193,8 @@ void MainWindow::addImages(QStringList files) {
 	if (!files.isEmpty()) {
 		for (int i = 0; i < files.count(); i++) {
 			//foreach(QString file, files){
-			ui->overallProgressBar->setValue(int((i + 1) * 100 / files.count()));
+			ui->overallProgressBar->setValue(
+					int((i + 1) * 100 / files.count()));
 			if (QFile().exists(files.at(i)) && !fileAlreadyAdded(files.at(i))) {
 				imagesList.append(files.at(i));
 				emit image_list_Changed(this->imagesList.count() - 1);
@@ -209,9 +210,9 @@ void MainWindow::addDir(QString dirString) {
 		// supported image formats
 		QStringList supportedFormats;
 		foreach(QByteArray format, QImageReader::supportedImageFormats())
-			{
-				supportedFormats << QString("*.").append(format);
-			}
+		{
+			supportedFormats << QString("*.").append(format);
+		}
 
 		// Set Filter to only load Image Files
 		dir.setNameFilters(supportedFormats);
@@ -331,8 +332,8 @@ void MainWindow::changeShowImages() {
 			QIcon icon;
 			QPixmap pixmap;
 			// make copy of scaled image
-			pixmap
-					= QPixmap(this->ui->FilesList->item(i)->text()).scaledToHeight(
+			pixmap =
+					QPixmap(this->ui->FilesList->item(i)->text()).scaledToHeight(
 							48);
 			ui->overallProgressBar->setValue(66);
 			// open Image to use it as Icon
@@ -406,8 +407,8 @@ void MainWindow::on_actionAbout_EasyImageSizer_GUI_triggered() {
 					+ QCoreApplication::organizationDomain() + ("\">")
 					+ QCoreApplication::organizationName() + ("</a></p>")
 					+ ("<p><a href=\"http://easyimagesizer.sourceforge.net/\">")
-					+ tr("Homepage") + ("</a></p>") + ("<br/><br/><p>") + tr(
-					"English translation: FalseCAM") + ("</p>"));
+					+ tr("Homepage") + ("</a></p>") + ("<br/><br/><p>")
+					+ tr("English translation: FalseCAM") + ("</p>"));
 }
 
 void MainWindow::on_actionAbout_EasyImageSizer_triggered() {
@@ -439,9 +440,11 @@ void MainWindow::on_commandLinkButton_clicked() {
 	ui->overallProgressBar->setValue(0);
 	if (form->getSaveTo()) {
 		this->easyImageSizer->convert(this->imagesList, form->getSaveFolder(),
-				this->form->getImageFormat(), this->form->getImageQuality());
+				this->form->getImageFormat(), this->form->getImageQuality(),
+				this->form->getCopyMetaData());
 	} else {
 		this->easyImageSizer->convert(this->imagesList, "",
-				this->form->getImageFormat(), this->form->getImageQuality());
+				this->form->getImageFormat(), this->form->getImageQuality(),
+				this->form->getCopyMetaData());
 	}
 }

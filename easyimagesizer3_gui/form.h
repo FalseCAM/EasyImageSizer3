@@ -35,6 +35,7 @@ public:
     QString getImageFormat();
     int getImageQuality();
     QString getSaveFolder();
+    bool getCopyMetaData();
     bool getSaveTo();
 
 

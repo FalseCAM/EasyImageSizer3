@@ -37,6 +37,7 @@ public:
 	QImage *getImage();
 	void setName(QString name);
 	QString getName();
+	void setCopyMetaData(bool copy);
 	int getIndex();
 	QString getOriginalFile();
 	QString save(QString folder, QString format, int quality);
@@ -46,6 +47,7 @@ private:
 	QString file;
 	QString name;
 	QImage *image;
+	bool copyMetaData;
 	Exiv2::ExifData exifData;
 	int index;
 

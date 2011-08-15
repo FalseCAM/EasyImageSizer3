@@ -22,6 +22,7 @@
 #include <QProcess>
 
 EisImage::EisImage() {
+	this->copyMetaData = true;
 }
 
 EisImage::EisImage(QString file, int index = 0) {
@@ -63,6 +64,10 @@ QString EisImage::getName() {
 	return name;
 }
 
+void EisImage::setCopyMetaData(bool copy) {
+	this->copyMetaData = copy;
+}
+
 int EisImage::getIndex() {
 	return index;
 }
@@ -81,7 +86,8 @@ QString EisImage::save(QString folder, QString format, int quality) {
 	if (!this->image->save(filename, qPrintable(format), quality)) {
 		qDebug("[EisImage] %s could not been saved.", qPrintable(filename));
 	} else {
-		copyExifData(this->file, filename);
+		if (this->copyMetaData)
+			copyExifData(this->file, filename);
 	}
 	return filename;
 }
@@ -98,22 +104,18 @@ QString EisImage::save(QString format, int quality) {
 
 // Copy exif Data from one file to another
 void EisImage::copyExifData(QString srcFile, QString destFile) {
-	// Start new Process that copies exif data
-	//QProcess process;
-	//process.start(
-	//		QString("exiftool -all= -overwrite_original -tagsfromfile \"").append(
-	//				srcFile) .append("\" -exif:all \"").append(destFile).append(
-	//				"\"").replace("/", QDir::separator()));
-	// Wait until process finished
-	//process.waitForFinished();
-	Exiv2::Image::AutoPtr srcImage = Exiv2::ImageFactory::open(
-			srcFile.toStdString().c_str());
-	srcImage->readMetadata();
+	try {
+		Exiv2::Image::AutoPtr srcImage = Exiv2::ImageFactory::open(
+				srcFile.toStdString().c_str());
+		srcImage->readMetadata();
 
-	Exiv2::ExifData& exifData = srcImage->exifData();
-	Exiv2::Image::AutoPtr destImage = Exiv2::ImageFactory::open(
-			destFile.toStdString().c_str());
-	destImage->setExifData(exifData);
-	destImage->writeMetadata();
+		Exiv2::ExifData& exifData = srcImage->exifData();
+		Exiv2::Image::AutoPtr destImage = Exiv2::ImageFactory::open(
+				destFile.toStdString().c_str());
+		destImage->setExifData(exifData);
+		destImage->writeMetadata();
+	} catch (Exiv2::Error& e) {
+		qDebug("[EisImage] %s", e.what());
+	}
 
 }

@@ -40,7 +40,7 @@ public:
 		return QString("http://easyimagesizer.sourceforge.net/");
 	}
 	static QString applicationVersion() {
-		return QString("3.0.2");
+		return QString("3.0.3");
 	}
 	static QIcon applicationIcon() {
 		return QIcon(":/icon/eis");
@@ -58,7 +58,7 @@ public:
 	void configPlugins(QWidget* parent);
 	QList<EasyImageSizer3Plugin*> getPlugins();
 	QStringList convert(QStringList images, QString folder, QString format,
-			int quality);
+			int quality, bool copyMetaData);
 
 	static void about(QWidget* parent);
 
