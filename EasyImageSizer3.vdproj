@@ -279,7 +279,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_237B3C4693BC46DE9BB794FDF6B8B9F0"
             {
-            "SourcePath" = "8:bin\\plugins\\libexiv2.dll"
+            "SourcePath" = "8:bin\\libexiv2.dll"
             "TargetName" = "8:libexiv2.dll"
             "Tag" = "8:"
             "Folder" = "8:_3BF6FE30B372430CB3E32EB35A9FFC26"
