@@ -29,6 +29,7 @@
 #include <QMimeData>
 #include <QDragEnterEvent>
 #include <QSplashScreen>
+#include <QElapsedTimer>
 #include "tipdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -42,8 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	splash->showMessage("Starting EasyImageSizer ...",
 			Qt::AlignTop | Qt::AlignRight, Qt::white);
 	easyImageSizer = new EasyImageSizer3();
-	splash->showMessage("Loading gui ...", Qt::AlignTop | Qt::AlignRight,
-			Qt::white);
+        splash->showMessage("Loading gui ...", Qt::AlignTop | Qt::AlignRight,
+                        Qt::white);
 	form = new Form();
 	ui->setupUi(this);
 	QApplication::setWindowIcon(easyImageSizer->applicationIcon());
@@ -438,6 +439,8 @@ void MainWindow::on_RemoveImageButton_clicked() {
 void MainWindow::on_commandLinkButton_clicked() {
 	ui->taskProgressBar->setValue(0);
 	ui->overallProgressBar->setValue(0);
+        QElapsedTimer timer;
+        timer.start();
 	if (form->getSaveTo()) {
 		this->easyImageSizer->convert(this->imagesList, form->getSaveFolder(),
 				this->form->getImageFormat(), this->form->getImageQuality(),
@@ -447,4 +450,6 @@ void MainWindow::on_commandLinkButton_clicked() {
 				this->form->getImageFormat(), this->form->getImageQuality(),
 				this->form->getCopyMetaData());
 	}
+        // Shows information MessageBox: Finished in X milliseconds
+        QMessageBox::information(this, "Finished", tr("EasyImageSizer converted %1 files in %2 milliseconds.").arg(this->imagesList.size()).arg(timer.elapsed()));
 }

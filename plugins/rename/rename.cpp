@@ -47,7 +47,7 @@ QString Rename::getTitle(){
 }
 
 QString Rename::getVersion(){
-    return QString("0.3");
+    return QString("0.4");
 }
 
 QString Rename::getAuthor(){
@@ -65,11 +65,12 @@ QIcon Rename::getIcon(){
 void Rename::convert(EisImage *image){
     emit progress(50);
     QString fileName = image->getName();
-    if(ui->counterCheckBox->isChecked() && !(ui->prefixLineEdit->text().isEmpty() && ui->suffixLineEdit->text().isEmpty())){
-        fileName = QString(ui->prefixLineEdit->text());
+    if(ui->renameCheckBox->isChecked() && !(ui->prefixLineEdit->text().isEmpty() && ui->suffixLineEdit->text().isEmpty())){
+        fileName.prepend(ui->prefixLineEdit->text());
+        fileName.append(ui->suffixLineEdit->text());
+
         if(ui->counterCheckBox->isChecked())
             fileName.append(QString("%1").arg(ui->startSpinBox->value()+image->getIndex(), ui->decimalSpinBox->value(), 10, QChar('0')) );
-        fileName.append(ui->suffixLineEdit->text());
     }
     image->setName(fileName);
     emit progress(100);

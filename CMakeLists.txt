@@ -1,10 +1,10 @@
 	CMAKE_MINIMUM_REQUIRED(VERSION 2.8.1)
 	
- 	########### Project name ###########
+ ########### Project name ###########
  	PROJECT(EasyImageSizer3)
  	SET(EASYIMAGESIZER_MAJOR "3")
  	SET(EASYIMAGESIZER_MINOR "0")
- 	SET(EASYIMAGESIZER_PATCH "2")
+        SET(EASYIMAGESIZER_PATCH "4")
  	SET(VERSION "${EASYIMAGESIZER_MAJOR}.${EASYIMAGESIZER_MINOR}.${EASYIMAGESIZER_PATCH}")
  	SET(PACKAGE easyimagesizer3)
    
@@ -46,7 +46,7 @@
 	install(DIRECTORY "easyimagesizer3/include/easyimagesizer3"
 			DESTINATION "include"
 			FILES_MATCHING PATTERN "*.h")
-	install (FILES "data/easyimagesizer3.xpm"
+        install(FILES "data/easyimagesizer3.xpm"
 			DESTINATION "share/pixmaps")
-	install (FILES "data/easyimagesizer3.desktop"
+        install(FILES "data/easyimagesizer3.desktop"
 			DESTINATION "share/applications")

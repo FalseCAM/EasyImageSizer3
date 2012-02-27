@@ -32,7 +32,7 @@ EasyImageSizer3::~EasyImageSizer3() {
 }
 
 /*
- About box to show information about PhotosDD library
+ About box to show information about EasyImageSizer library
  */
 void EasyImageSizer3::about(QWidget* parent = 0) {
 	QMessageBox aboutBox;

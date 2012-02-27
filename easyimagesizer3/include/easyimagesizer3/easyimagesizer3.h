@@ -40,7 +40,7 @@ public:
 		return QString("http://easyimagesizer.sourceforge.net/");
 	}
 	static QString applicationVersion() {
-		return QString("3.0.3");
+                return QString("3.0.4");
 	}
 	static QIcon applicationIcon() {
 		return QIcon(":/icon/eis");

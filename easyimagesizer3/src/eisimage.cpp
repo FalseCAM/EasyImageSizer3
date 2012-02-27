@@ -30,7 +30,7 @@ EisImage::EisImage(QString file, int index = 0) {
 	this->name = QFileInfo(file).baseName();
 	this->image = new QImage(file);
 	this->index = index;
-	readMetadata();
+        readMetadata();
 }
 
 EisImage::~EisImage() {
@@ -39,11 +39,15 @@ EisImage::~EisImage() {
 }
 
 void EisImage::readMetadata() {
+    try{
 	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(
 			this->file.toStdString().c_str());
 	image->readMetadata();
 
-	this->exifData = image->exifData();
+        this->exifData = image->exifData();
+    } catch (Exiv2::Error& e) {
+        qCritical("[EisImage] %s", e.what());
+    }
 }
 
 void EisImage::setImage(QImage *img) {
@@ -65,7 +69,7 @@ QString EisImage::getName() {
 }
 
 void EisImage::setCopyMetaData(bool copy) {
-	this->copyMetaData = copy;
+        this->copyMetaData = copy;
 }
 
 int EisImage::getIndex() {
@@ -104,6 +108,7 @@ QString EisImage::save(QString format, int quality) {
 
 // Copy exif Data from one file to another
 void EisImage::copyExifData(QString srcFile, QString destFile) {
+
 	try {
 		Exiv2::Image::AutoPtr srcImage = Exiv2::ImageFactory::open(
 				srcFile.toStdString().c_str());
@@ -115,7 +120,6 @@ void EisImage::copyExifData(QString srcFile, QString destFile) {
 		destImage->setExifData(exifData);
 		destImage->writeMetadata();
 	} catch (Exiv2::Error& e) {
-		qDebug("[EisImage] %s", e.what());
+                qCritical("[EisImage] %s", e.what());
 	}
-
 }

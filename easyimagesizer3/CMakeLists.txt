@@ -12,10 +12,10 @@ ADD_DEFINITIONS( -D EASYIMAGESIZER3_LIBRARY )
 # enable warnings
 add_definitions( -Wall )
 
-file(GLOB EASYIMAGESIZER3_LIB_SRCS "src/*.cpp")
+file(GLOB EASYIMAGESIZER3_LIB_SRCS "src/*.cpp" "include/easyimagesizer3/*.h")
 file(GLOB EASYIMAGESIZER3_LIB_HEADERS "include/easyimagesizer3/*.h")
 
-set(EASYIMAGESIZER3_LIB_UIS
+set( EASYIMAGESIZER3_LIB_UIS
     pluginsdialog.ui
 )
 

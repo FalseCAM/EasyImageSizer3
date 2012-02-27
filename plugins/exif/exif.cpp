@@ -45,7 +45,7 @@ QString Exif::getTitle() {
 }
 
 QString Exif::getVersion() {
-	return QString("0.4");
+        return QString("0.5");
 }
 
 QString Exif::getAuthor() {
@@ -79,18 +79,22 @@ QDateTime Exif::getDateTime(QString file) {
 	emit progress(1);
 	QDateTime DateTime;
 
-	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(
-			file.toStdString().c_str());
-	image->readMetadata();
+        try{
+            Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(
+                            file.toStdString().c_str());
+            image->readMetadata();
 
-	Exiv2::ExifData& exifData = image->exifData();
+            Exiv2::ExifData& exifData = image->exifData();
 
-	Exiv2::ExifData::iterator pos = exifData.findKey(
-			Exiv2::ExifKey("Exif.Photo.DateTimeOriginal"));
+            Exiv2::ExifData::iterator pos = exifData.findKey(
+                            Exiv2::ExifKey("Exif.Photo.DateTimeOriginal"));
 
-	DateTime = QDateTime::fromString(
-			QString().fromStdString(pos->value().toString()),
-			"yyyy:MM:dd hh:mm:ss");
+            DateTime = QDateTime::fromString(
+                            QString().fromStdString(pos->value().toString()),
+                            "yyyy:MM:dd hh:mm:ss");
+        } catch (Exiv2::Error& e) {
+                qDebug("[Exif-Plugin] %s", e.what());
+        }
 
 	// Check if there is a correct Date
 	if (!DateTime.isValid())
