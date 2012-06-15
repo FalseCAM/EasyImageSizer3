@@ -22,6 +22,7 @@
 #ifndef OVERLAY_H
 #define OVERLAY_H
 
+#include <QWidget>
 #include "easyimagesizer3/easyimagesizer3plugin.h"
 #include "easyimagesizer3/eisimage.h"
 
@@ -29,12 +30,12 @@ namespace Ui {
 class Overlay;
 }
 
-class Overlay: public EasyImageSizer3Plugin {
+class Overlay: public QObject, public EasyImageSizer3Plugin {
 Q_OBJECT
 Q_INTERFACES( EasyImageSizer3Plugin)
 
 public:
-	Overlay(QWidget *parent = 0);
+    Overlay();
 	~Overlay();
 	QString getName();
 	QString getTitle();
@@ -42,6 +43,8 @@ public:
 	QString getAuthor();
 	QString getDescription();
 	QIcon getIcon();
+    QWidget* createWidget();
+    QObject* getObject(){ return this; }
 	void convert(EisImage *image);
 
 private slots:
@@ -51,7 +54,9 @@ private slots:
 	void saveState();
 
 private:
-	Ui::Overlay *ui;signals:
+    Ui::Overlay *ui;
+    QWidget *widget;
+signals:
 	void progress(int);
 };
 

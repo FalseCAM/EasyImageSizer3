@@ -27,14 +27,15 @@
 #include <QColorDialog>
 #include <QSettings>
 
-OverlayText::OverlayText(QWidget *parent) :
-	QWidget(parent), ui(new Ui::OverlayText) {
+OverlayText::OverlayText() :
+    ui(new Ui::OverlayText) {
+    widget = new QWidget();
 	font = new QFont();
 	color = new QColor();
 	pixmap = new QPixmap(32, 32);
 	scene = new QGraphicsScene();
 	scenePixmap = new QPixmap(100, 100);
-	ui->setupUi(this);
+    ui->setupUi(widget);
 	ui->preview->setScene(scene);
 
 	connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(setFont()));
@@ -55,7 +56,9 @@ OverlayText::OverlayText(QWidget *parent) :
 
 OverlayText::~OverlayText() {
 	saveState();
+    widget->close();
 	delete ui;
+    delete widget;
 }
 
 QString OverlayText::getName() {
@@ -80,6 +83,10 @@ QString OverlayText::getDescription() {
 
 QIcon OverlayText::getIcon() {
 	return QIcon("");
+}
+
+QWidget * OverlayText::createWidget(){
+    return widget;
 }
 
 void OverlayText::convert(EisImage *image) {
@@ -110,7 +117,7 @@ void OverlayText::addOverlay(QImage *image, QString overlay) {
 // shows a dialog to select font of text
 void OverlayText::setFont() {
 	bool ok;
-	QFont temp = QFontDialog::getFont(&ok, *font, this);
+    QFont temp = QFontDialog::getFont(&ok, *font, widget);
 	if (ok) {
 		delete font;
 		this->font = new QFont(temp);
@@ -121,7 +128,7 @@ void OverlayText::setFont() {
 
 // shows a dialog to select color of text
 void OverlayText::setColor() {
-	QColor temp = QColorDialog::getColor(*color, this);
+    QColor temp = QColorDialog::getColor(*color, widget);
 
 	delete color;
 	color = new QColor(temp);

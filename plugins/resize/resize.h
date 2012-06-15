@@ -29,12 +29,12 @@ namespace Ui {
 class Resize;
 }
 
-class Resize: public EasyImageSizer3Plugin {
+class Resize: public QObject, public EasyImageSizer3Plugin {
 Q_OBJECT
 Q_INTERFACES(EasyImageSizer3Plugin)
 
 public:
-	Resize(QWidget *parent = 0);
+    Resize();
 	~Resize();
 	QString getName();
 	QString getTitle();
@@ -42,6 +42,8 @@ public:
 	QString getAuthor();
 	QString getDescription();
 	QIcon getIcon();
+    QWidget* createWidget();
+    QObject* getObject(){ return this; }
 	void convert(EisImage *image);
 
 private slots:
@@ -55,6 +57,7 @@ private slots:
 
 private:
 	Ui::Resize *ui;
+    QWidget *widget;
 
 signals:
 	void progress(int);

@@ -25,16 +25,19 @@
 #include "rotate.h"
 #include "ui_rotate.h"
 
-Rotate::Rotate(QWidget *parent) :
-	QWidget(parent), ui(new Ui::Rotate) {
-	ui->setupUi(this);
+Rotate::Rotate() :
+    ui(new Ui::Rotate) {
+    widget = new QWidget();
+    ui->setupUi(widget);
 
 	loadState();
 }
 
 Rotate::~Rotate() {
 	saveState();
+    widget->close();
 	delete ui;
+    delete widget;
 }
 
 QString Rotate::getName() {
@@ -59,6 +62,10 @@ QString Rotate::getDescription() {
 
 QIcon Rotate::getIcon() {
 	return QIcon("");
+}
+
+QWidget * Rotate::createWidget(){
+    return widget;
 }
 
 void Rotate::convert(EisImage *image) {

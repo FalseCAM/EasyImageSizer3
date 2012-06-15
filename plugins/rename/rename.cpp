@@ -24,18 +24,20 @@
 #include <QtCore>
 #include <QSettings>
 
-Rename::Rename(QWidget *parent) :
-        QWidget(parent),
+Rename::Rename() :
         ui(new Ui::Rename)
 {
-    ui->setupUi(this);
+    widget = new QWidget();
+    ui->setupUi(widget);
     loadState();
 }
 
 Rename::~Rename()
 {
     saveState();
+    widget->close();
     delete ui;
+    delete widget;
 }
 
 QString Rename::getName(){
@@ -60,6 +62,10 @@ QString Rename::getDescription(){
 
 QIcon Rename::getIcon(){
     return QIcon();
+}
+
+QWidget * Rename::createWidget(){
+    return widget;
 }
 
 void Rename::convert(EisImage *image){

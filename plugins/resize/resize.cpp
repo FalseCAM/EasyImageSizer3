@@ -25,9 +25,10 @@
 #include "resize.h"
 #include "ui_resize.h"
 
-Resize::Resize(QWidget *parent) :
-	QWidget(parent), ui(new Ui::Resize) {
-	ui->setupUi(this);
+Resize::Resize() :
+    ui(new Ui::Resize) {
+    widget = new QWidget();
+    ui->setupUi(widget);
 
 	loadState();
 
@@ -43,7 +44,9 @@ Resize::Resize(QWidget *parent) :
 
 Resize::~Resize() {
 	saveState();
+    widget->close();
 	delete ui;
+    delete widget;
 }
 
 QString Resize::getName() {
@@ -68,6 +71,10 @@ QString Resize::getDescription() {
 
 QIcon Resize::getIcon() {
 	return QIcon("");
+}
+
+QWidget * Resize::createWidget(){
+    return widget;
 }
 
 void Resize::convert(EisImage *image) {

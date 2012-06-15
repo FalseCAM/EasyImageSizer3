@@ -19,6 +19,7 @@
 #define EASYIMAGESIZER_H
 
 #include <QObject>
+#include <QThread>
 #include <QString>
 #include <QWidget>
 #include <QCoreApplication>
@@ -26,7 +27,7 @@
 #include "easyimagesizer3/easyimagesizer3_global.h"
 #include "easyimagesizer3/easyimagesizer3plugin.h"
 
-class EASYIMAGESIZER3SHARED_EXPORT EasyImageSizer3: public QObject {
+class EASYIMAGESIZER3SHARED_EXPORT EasyImageSizer3: public QThread {
 Q_OBJECT
 public:
 	EasyImageSizer3();
@@ -40,7 +41,7 @@ public:
 		return QString("http://easyimagesizer.sourceforge.net/");
 	}
 	static QString applicationVersion() {
-                return QString("3.0.4");
+                return QString("3.0.5");
 	}
 	static QIcon applicationIcon() {
 		return QIcon(":/icon/eis");
@@ -55,18 +56,33 @@ public:
 		return QString("FalseCAM");
 	}
 
+    void run();
 	void configPlugins(QWidget* parent);
-	QList<EasyImageSizer3Plugin*> getPlugins();
+    static QList<EasyImageSizer3Plugin*> getPlugins();
 	QStringList convert(QStringList images, QString folder, QString format,
 			int quality, bool copyMetaData);
 
 	static void about(QWidget* parent);
-
-private:
-
 signals:
-	void progress(int);
+    void progress(int);
+private:
+    int progressPos;
+    int progressMax;
+    static void convert(QStringList images, int index, QString folder, QString format, int quality, bool copyMetaData);
+    static void convertMeta(QStringList images, int index, QString folder, QString format, int quality);
+    static void convertNoMeta(QStringList images, int index, QString folder, QString format, int quality);
+    //
+    QStringList images;
+    QString folder;
+    QString format;
+    int quality;
+    bool copyMetaData;
+
+
+
 public slots:
+    void progressChanged(int);
+    void progressChanged();
 };
 
 #endif // EASYIMAGESIZER_H

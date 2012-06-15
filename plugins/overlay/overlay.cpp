@@ -28,9 +28,9 @@
 #include <QSettings>
 #include <QTranslator>
 
-Overlay::Overlay(QWidget *parent) :
-	QWidget(parent), ui(new Ui::Overlay) {
-	ui->setupUi(this);
+Overlay::Overlay() : ui(new Ui::Overlay) {
+    widget = new QWidget();
+    ui->setupUi(widget);
 
 	// loads last state of gui
 	loadState();
@@ -40,7 +40,9 @@ Overlay::Overlay(QWidget *parent) :
 
 Overlay::~Overlay() {
 	saveState();
+    widget->close();
 	delete ui;
+    delete widget;
 }
 
 QString Overlay::getName() {
@@ -68,6 +70,10 @@ QIcon Overlay::getIcon() {
 	return QIcon("");
 }
 
+QWidget * Overlay::createWidget(){
+    return widget;
+}
+
 void Overlay::convert(EisImage *image) {
 	if (ui->overlayCheckBox->isChecked()) {
 		emit progress(50);
@@ -81,7 +87,7 @@ void Overlay::convert(EisImage *image) {
 // Set Overlay Image to data
 void Overlay::setOverlayImage() {
 	// opens a Dialog to choose save directory
-	QString file = QFileDialog::getOpenFileName(this,
+    QString file = QFileDialog::getOpenFileName(widget,
 			tr("Please select a file"), ui->overlayImage->text(),
 			"All Supported Image Files (*.bmp *.png *.tif *.tiff);;"
 				"All Files (*.*)");
@@ -124,5 +130,4 @@ void Overlay::saveState() {
 	settings.setValue("OverlayImage", ui->overlayImage->text());
 }
 
-Q_EXPORT_PLUGIN2(overlay, Overlay)
-;
+Q_EXPORT_PLUGIN2(overlay, Overlay);

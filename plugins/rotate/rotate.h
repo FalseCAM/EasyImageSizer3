@@ -29,13 +29,13 @@ namespace Ui {
     class Rotate;
 }
 
-class Rotate : public EasyImageSizer3Plugin
+class Rotate : public QObject, public EasyImageSizer3Plugin
 {
     Q_OBJECT
     Q_INTERFACES(EasyImageSizer3Plugin)
 
 public:
-    Rotate(QWidget *parent = 0);
+    Rotate();
     ~Rotate();
     QString getName();
     QString getTitle();
@@ -43,6 +43,8 @@ public:
     QString getAuthor();
     QString getDescription();
     QIcon getIcon();
+    QWidget* createWidget();
+    QObject* getObject(){ return this; }
     void convert(EisImage *image);
 
 private slots:
@@ -52,6 +54,7 @@ private slots:
 
 private:
     Ui::Rotate *ui;
+    QWidget *widget;
 
 signals:
     void progress(int);

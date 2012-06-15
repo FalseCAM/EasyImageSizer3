@@ -25,15 +25,18 @@
 
 #include <exiv2/exiv2.hpp>
 
-Exif::Exif(QWidget *parent) :
-	QWidget(parent), ui(new Ui::Exif) {
-	ui->setupUi(this);
+Exif::Exif() :
+    ui(new Ui::Exif) {
+    widget = new QWidget();
+    ui->setupUi(widget);
 	loadState();
 }
 
 Exif::~Exif() {
 	saveState();
+    widget->close();
 	delete ui;
+    delete widget;
 }
 
 QString Exif::getName() {
@@ -58,6 +61,11 @@ QString Exif::getDescription() {
 
 QIcon Exif::getIcon() {
 	return QIcon("");
+}
+
+QWidget * Exif::createWidget()
+{
+    return widget;
 }
 
 void Exif::convert(EisImage *image) {
@@ -126,5 +134,4 @@ void Exif::saveState() {
 
 }
 
-Q_EXPORT_PLUGIN2(exif, Exif)
-;
+Q_EXPORT_PLUGIN2(exif, Exif);

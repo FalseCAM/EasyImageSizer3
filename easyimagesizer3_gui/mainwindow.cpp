@@ -78,7 +78,7 @@ void MainWindow::initSignalSlots() {
 
 	QList<EasyImageSizer3Plugin*> plugins = easyImageSizer->getPlugins();
 	for (int i = 0; i < plugins.count(); i++) {
-		connect(easyImageSizer->getPlugins().at(i), SIGNAL(progress(int)),
+        connect(easyImageSizer->getPlugins().at(i)->getObject(), SIGNAL(progress(int)),
 				ui->taskProgressBar, SLOT(setValue(int)));
 	}
 }
@@ -87,7 +87,8 @@ MainWindow::~MainWindow() {
 	saveConfig();
 	delete easyImageSizer;
 	delete form;
-	delete ui;
+    delete ui;
+    qDebug("[MainWindow] destructor finished");
 }
 
 void MainWindow::loadPluginWidgets() {
@@ -101,7 +102,7 @@ void MainWindow::loadPluginWidgets() {
 	foreach (EasyImageSizer3Plugin *plugin, easyImageSizer->getPlugins())
 	{
 		if (plugin)
-			ui->tabWidget->addTab(plugin, plugin->getTitle());
+            ui->tabWidget->addTab(plugin->createWidget(), plugin->getTitle());
 	}
 }
 
@@ -404,7 +405,7 @@ void MainWindow::on_actionAbout_EasyImageSizer_GUI_triggered() {
 					+ ("</h1></p>")
 					+ ("<p align=\"left\"><font size=\"2\" color=\"grey\">")
 					+ tr("Version ") + QCoreApplication::applicationVersion()
-					+ ("</font>") + ("<p align=\"left\">(C) 2011 <a href=\"")
+                    + ("</font>") + ("<p align=\"left\">(C) 2012 <a href=\"")
 					+ QCoreApplication::organizationDomain() + ("\">")
 					+ QCoreApplication::organizationName() + ("</a></p>")
 					+ ("<p><a href=\"http://easyimagesizer.sourceforge.net/\">")
@@ -437,6 +438,7 @@ void MainWindow::on_RemoveImageButton_clicked() {
 }
 
 void MainWindow::on_commandLinkButton_clicked() {
+    connect(this->easyImageSizer, SIGNAL(progress(int)), this->ui->overallProgressBar, SLOT(setValue(int)));
 	ui->taskProgressBar->setValue(0);
 	ui->overallProgressBar->setValue(0);
         QElapsedTimer timer;
@@ -450,6 +452,11 @@ void MainWindow::on_commandLinkButton_clicked() {
 				this->form->getImageFormat(), this->form->getImageQuality(),
 				this->form->getCopyMetaData());
 	}
-        // Shows information MessageBox: Finished in X milliseconds
-        QMessageBox::information(this, "Finished", tr("EasyImageSizer converted %1 files in %2 milliseconds.").arg(this->imagesList.size()).arg(timer.elapsed()));
+    this->easyImageSizer->start();
+    // hold gui responsive
+    while(this->easyImageSizer->isRunning())
+        QCoreApplication::processEvents();
+
+    // Shows information MessageBox: Finished in X milliseconds
+    QMessageBox::information(this, "Finished", tr("EasyImageSizer converted %1 files in %2 milliseconds.").arg(this->imagesList.size()).arg(timer.elapsed()));
 }

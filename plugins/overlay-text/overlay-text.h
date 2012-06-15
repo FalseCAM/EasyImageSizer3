@@ -33,12 +33,12 @@ namespace Ui {
 class OverlayText;
 }
 
-class OverlayText: public EasyImageSizer3Plugin {
+class OverlayText: public QObject, public EasyImageSizer3Plugin {
 Q_OBJECT
 Q_INTERFACES(EasyImageSizer3Plugin)
 
 public:
-	OverlayText(QWidget *parent = 0);
+    OverlayText();
 	~OverlayText();
 
 	QFont *font;
@@ -53,6 +53,8 @@ public:
 	QString getAuthor();
 	QString getDescription();
 	QIcon getIcon();
+    QWidget* createWidget();
+    QObject* getObject(){ return this; }
 	void convert(EisImage *image);
 
 private slots:
@@ -64,7 +66,9 @@ private slots:
 	void makePreview();
 
 private:
-	Ui::OverlayText *ui;signals:
+    Ui::OverlayText *ui;
+    QWidget *widget;
+signals:
 	void progress(int);
 };
 

@@ -29,12 +29,12 @@ namespace Ui {
 class Rename;
 }
 
-class Rename: public EasyImageSizer3Plugin {
+class Rename: public QObject, public EasyImageSizer3Plugin {
 Q_OBJECT
 Q_INTERFACES(EasyImageSizer3Plugin)
 
 public:
-	Rename(QWidget *parent = 0);
+    Rename();
 	~Rename();
 	QString getName();
 	QString getTitle();
@@ -42,6 +42,8 @@ public:
 	QString getAuthor();
 	QString getDescription();
 	QIcon getIcon();
+    QWidget* createWidget();
+    QObject* getObject(){ return this; }
 	void convert(EisImage *image);
 
 private slots:
@@ -49,7 +51,9 @@ private slots:
 	void saveState();
 
 private:
-	Ui::Rename *ui;signals:
+    Ui::Rename *ui;
+    QWidget *widget;
+signals:
 	void progress(int);
 };
 

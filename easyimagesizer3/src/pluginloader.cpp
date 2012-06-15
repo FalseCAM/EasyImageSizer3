@@ -35,7 +35,7 @@ PluginLoader::PluginLoader(QObject *parent = 0) {
 
 PluginLoader::~PluginLoader() {
 	saveConfig();
-	unloadPlugins();
+    unloadPlugins();
 }
 
 PluginLoader& PluginLoader::getInstance() {
@@ -232,6 +232,7 @@ void PluginLoader::unloadPlugins() {
 	qDebug("[PluginLoader] unloads Plugins");
 	foreach(EasyImageSizer3Plugin * plugin, pluginList)
 		{
+            qDebug("[PluginLoader] unloading Plugin %s", qPrintable(plugin->getName()));
 			activatedPluginList.removeOne(plugin);
 			pluginList.removeOne(plugin);
 			delete plugin;

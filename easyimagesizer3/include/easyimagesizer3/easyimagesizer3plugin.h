@@ -23,7 +23,7 @@
 #include <QString>
 #include "easyimagesizer3/eisimage.h"
 
-class EasyImageSizer3Plugin: virtual public QWidget {
+class EasyImageSizer3Plugin{
 public:
 	virtual ~EasyImageSizer3Plugin() {
 	}
@@ -33,12 +33,13 @@ public:
 	virtual QString getAuthor() = 0;
 	virtual QString getDescription() = 0;
 	virtual QIcon getIcon() = 0;
-	virtual void convert(EisImage *image) = 0;
-	// signals: void progress(int);
+    virtual QWidget* createWidget() = 0;
+    virtual QObject* getObject() = 0;
+    virtual void convert(EisImage *image) = 0;
 };
 
 Q_DECLARE_INTERFACE(EasyImageSizer3Plugin,
-		"EasyImageSizer3.EasyImageSizer3Plugin/0.1")
+        "EasyImageSizer3.EasyImageSizer3Plugin/0.1")
 ;
 
 #endif // PLUGIN_H
