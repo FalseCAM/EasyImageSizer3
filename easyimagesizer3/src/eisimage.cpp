@@ -51,9 +51,11 @@ void EisImage::readMetadata() {
 }
 
 void EisImage::setImage(QImage *img) {
-	if (this->image != 0)
-		delete this->image;
-	this->image = img;
+    if (this->image != img){
+        if (this->image != 0)
+            delete this->image;
+        this->image = img;
+    }
 }
 
 QImage* EisImage::getImage() {

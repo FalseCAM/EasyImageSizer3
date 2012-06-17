@@ -41,7 +41,7 @@ public:
 		return QString("http://easyimagesizer.sourceforge.net/");
 	}
 	static QString applicationVersion() {
-                return QString("3.0.5");
+                return QString("3.0.6");
 	}
 	static QIcon applicationIcon() {
 		return QIcon(":/icon/eis");

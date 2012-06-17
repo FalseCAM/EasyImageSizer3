@@ -1,10 +1,10 @@
-	CMAKE_MINIMUM_REQUIRED(VERSION 2.8.1)
+        CMAKE_MINIMUM_REQUIRED(VERSION 2.8.0)
 	
  ########### Project name ###########
  	PROJECT(EasyImageSizer3)
  	SET(EASYIMAGESIZER_MAJOR "3")
  	SET(EASYIMAGESIZER_MINOR "0")
-        SET(EASYIMAGESIZER_PATCH "4")
+        SET(EASYIMAGESIZER_PATCH "6")
  	SET(VERSION "${EASYIMAGESIZER_MAJOR}.${EASYIMAGESIZER_MINOR}.${EASYIMAGESIZER_PATCH}")
  	SET(PACKAGE easyimagesizer3)
    
@@ -31,6 +31,8 @@
 	install(FILES "bin/easyimagesizer3-gui"
 			DESTINATION bin
 			PERMISSIONS OWNER_READ OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+	install(FILES "bin/plugins/libcolor.so"
+			DESTINATION "lib/easyimagesizer3/plugins")
 	install(FILES "bin/plugins/libexif.so"
 			DESTINATION "lib/easyimagesizer3/plugins")
 	install(FILES "bin/plugins/liboverlay.so"
