@@ -1,6 +1,7 @@
 	########### Subdirectories ###############
 	PROJECT(EasyImageSizer)
-        ADD_SUBDIRECTORY( color )
+	ADD_SUBDIRECTORY( blur )
+    ADD_SUBDIRECTORY( color )
 	ADD_SUBDIRECTORY( exif )
 	ADD_SUBDIRECTORY( overlay )
 	ADD_SUBDIRECTORY( overlay-text )

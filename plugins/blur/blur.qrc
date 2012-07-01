@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/blur">
+        <file>eis-large.png</file>
+    </qresource>
+</RCC>
