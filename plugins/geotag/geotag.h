@@ -1,5 +1,5 @@
 /*
- EasyImageSizer - Exif
+ EasyImageSizer - Geotag
 
  EasyImageSizer plugin to Overlay an image to a QImage
 
@@ -19,24 +19,27 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// Some code from http://qt-project.org/doc/qt-4.8/demos-embedded-lightmaps.html
+
 #ifndef EXIF_H
 #define EXIF_H
 
 #include <QDateTime>
 #include "easyimagesizer3/easyimagesizer3plugin.h"
 #include "easyimagesizer3/eisimage.h"
+#include "map.h"
 
 namespace Ui {
-class Exif;
+class Geotag;
 }
 
-class Exif: public QObject, public EasyImageSizer3Plugin {
+class Geotag: public QObject, public EasyImageSizer3Plugin {
     Q_OBJECT
     Q_INTERFACES(EasyImageSizer3Plugin)
 
 public:
-    Exif();
-	~Exif();
+    Geotag();
+	~Geotag();
 	QString getName();
 	QString getTitle();
 	QString getVersion();
@@ -49,14 +52,17 @@ public:
 
 private slots:
 	void loadState();
-	void saveState();
-	QString exifToString(QString origImage);
-    QDateTime getDateTime(QString file);
-    QDateTime getDateTime(EisImage *image);
+    void saveState();
+
+    void latChanged(qreal lat);
+    void lngChanged(qreal lng);
+
+    void on_gotoButton_clicked();
 
 private:
-    Ui::Exif *ui;
+    Ui::Geotag *ui;
     QWidget *widget;
+    Map *map;
 signals:
 	void progress(int);
 };

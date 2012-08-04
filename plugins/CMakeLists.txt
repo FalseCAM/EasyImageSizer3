@@ -8,3 +8,4 @@
     ADD_SUBDIRECTORY( rename )
     ADD_SUBDIRECTORY( resize )
     ADD_SUBDIRECTORY( rotate )
+    ADD_SUBDIRECTORY( geotag )

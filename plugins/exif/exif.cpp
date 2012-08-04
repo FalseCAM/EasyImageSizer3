@@ -29,38 +29,38 @@ Exif::Exif() :
     ui(new Ui::Exif) {
     widget = new QWidget();
     ui->setupUi(widget);
-	loadState();
+    loadState();
 }
 
 Exif::~Exif() {
-	saveState();
+    saveState();
     widget->close();
-	delete ui;
+    delete ui;
     delete widget;
 }
 
 QString Exif::getName() {
-	return QString("Exif");
+    return QString("Exif");
 }
 
 QString Exif::getTitle() {
-	return QString(tr("Rename by Exifdata"));
+    return QString(tr("Rename by Exifdata"));
 }
 
 QString Exif::getVersion() {
-        return QString("0.5");
+    return QString("0.6");
 }
 
 QString Exif::getAuthor() {
-	return QString("FalseCAM");
+    return QString("FalseCAM");
 }
 
 QString Exif::getDescription() {
-	return QString(tr("Plugin to rename Images by Exifdata"));
+    return QString(tr("Plugin to rename Images by Exifdata"));
 }
 
 QIcon Exif::getIcon() {
-	return QIcon("");
+    return QIcon("");
 }
 
 QWidget * Exif::createWidget()
@@ -69,68 +69,84 @@ QWidget * Exif::createWidget()
 }
 
 void Exif::convert(EisImage *image) {
-	if (ui->prependRadio->isChecked()) {
-		image->setName(
-				exifToString(image->getOriginalFile()) + image->getName());
-	} else if (ui->appendRadio->isChecked()) {
-		image->setName(
-				image->getName() + exifToString(image->getOriginalFile()));
-	} else {
-	}
+    if (ui->prependRadio->isChecked()) {
+        image->setName(
+                    getDateTime(image).toString(ui->lineEdit->text()) + image->getName());
+                    //exifToString(image->getOriginalFile()) + image->getName());
+    } else if (ui->appendRadio->isChecked()) {
+        image->setName(
+                    image->getName() + getDateTime(image).toString(ui->lineEdit->text()));
+                    //image->getName() + exifToString(image->getOriginalFile()));
+    } else {
+    }
 }
 
 QString Exif::exifToString(QString origImage) {
-	return getDateTime(origImage).toString(ui->lineEdit->text());
+    return getDateTime(origImage).toString(ui->lineEdit->text());
+}
+
+QDateTime Exif::getDateTime(EisImage *image){
+    emit progress(1);
+    QDateTime DateTime;
+    DateTime = QDateTime::fromString(
+                image->getExifKey("Exif.Photo.DateTimeOriginal"),
+                "yyyy:MM:dd hh:mm:ss");
+
+    // Check if there is a correct Date
+    if (!DateTime.isValid())
+        return QDateTime(QDate(1900, 1, 1), QTime(0, 0, 0));emit
+            emit progress(100);
+    return DateTime;
 }
 
 QDateTime Exif::getDateTime(QString file) {
-	emit progress(1);
-	QDateTime DateTime;
+    emit progress(1);
+    QDateTime DateTime;
 
-        try{
-            Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(
-                            file.toStdString().c_str());
-            image->readMetadata();
+    try{
+        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(
+                    file.toStdString().c_str());
+        image->readMetadata();
 
-            Exiv2::ExifData& exifData = image->exifData();
+        Exiv2::ExifData& exifData = image->exifData();
 
-            Exiv2::ExifData::iterator pos = exifData.findKey(
-                            Exiv2::ExifKey("Exif.Photo.DateTimeOriginal"));
+        Exiv2::ExifData::iterator pos = exifData.findKey(
+                    Exiv2::ExifKey("Exif.Photo.DateTimeOriginal"));
 
-            DateTime = QDateTime::fromString(
-                            QString().fromStdString(pos->value().toString()),
-                            "yyyy:MM:dd hh:mm:ss");
-        } catch (Exiv2::Error& e) {
-                qDebug("[Exif-Plugin] %s", e.what());
-        }
+        DateTime = QDateTime::fromString(
+                    QString().fromStdString(pos->value().toString()),
+                    "yyyy:MM:dd hh:mm:ss");
+    } catch (Exiv2::Error& e) {
+        qDebug("[Exif-Plugin] %s", e.what());
+    }
 
-	// Check if there is a correct Date
-	if (!DateTime.isValid())
-		return QDateTime(QDate(1900, 1, 1), QTime(0, 0, 0));emit
-	progress(100);
-	return DateTime;
+    // Check if there is a correct Date
+    if (!DateTime.isValid())
+        return QDateTime(QDate(1900, 1, 1), QTime(0, 0, 0));emit
+            emit progress(100);
+    return DateTime;
 }
 
 // loads last state of gui
 void Exif::loadState() {
-	QSettings settings(QCoreApplication::organizationName(),
-			QCoreApplication::applicationName());
-	settings.beginGroup("plugin");
-	settings.beginGroup(QString(getName()));
-	ui->prependRadio->setChecked(settings.value("Prepend", false).toBool());
-	ui->appendRadio->setChecked(settings.value("Append", false).toBool());
-	ui->lineEdit->setText(settings.value("String", "").toString());
+    QSettings settings(QCoreApplication::organizationName(),
+                       QCoreApplication::applicationName());
+    settings.beginGroup("plugin");
+    settings.beginGroup(QString(getName()));
+    ui->prependRadio->setChecked(settings.value("Prepend", false).toBool());
+    ui->appendRadio->setChecked(settings.value("Append", false).toBool());
+    ui->lineEdit->setText(settings.value("String", "").toString());
 }
 
 // saves state of gui
 void Exif::saveState() {
-	QSettings settings(QCoreApplication::organizationName(),
-			QCoreApplication::applicationName());
-	settings.beginGroup("plugin");
-	settings.beginGroup(QString(getName()));
-	settings.setValue("Prepend", ui->prependRadio->isChecked());
-	settings.setValue("Append", ui->appendRadio->isChecked());
-	settings.setValue("String", ui->lineEdit->text());
+    QSettings settings(QCoreApplication::organizationName(),
+                       QCoreApplication::applicationName());
+    settings.beginGroup("plugin");
+    settings.beginGroup(QString(getName()));
+    settings.setValue("Prepend", ui->prependRadio->isChecked());
+    settings.setValue("Append", ui->appendRadio->isChecked());
+    settings.setValue("String", ui->lineEdit->text());
 
 }
 

@@ -59,8 +59,13 @@ Blur::~Blur() {
     widget->close();
 	delete ui;
     delete widget;
-    delete image;
-    delete previewImage;
+    // TODO: solve crashes
+    /*
+    if(previewImage != 0)
+        delete previewImage;
+    if(image != 0)
+        delete image;
+        */
 }
 
 QString Blur::getName() {
